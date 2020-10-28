@@ -26,5 +26,11 @@ psk="your_wifi_password"
 }
 ```
 
-Theoretically, once the microSD is inserted into the raspi and the raspi is plugged in, it should be possible to SSH into it after it boots up. 
+The microSD can now be inserted into the raspi.
+
+## First boot
+
+Once the raspi is plugged in and it boots up, it should be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`. 
+
+This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
 
