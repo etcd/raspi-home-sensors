@@ -39,7 +39,7 @@ This IP can be determined by looking for the device named `raspberrypi` on your 
 Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-sudo python /home/pi/sensor_loop.py &
+sudo python3 /home/pi/sensor_loop.py &
 ```
 
 The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
