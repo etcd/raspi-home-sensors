@@ -6,7 +6,7 @@ This repository contains code for a Raspberry Pi to monitor a home environment v
 
 I've found that the most convenient way of using a raspi is through headless setup and operation. The instructions below document how to perform this headless setup with Raspberry Pi OS (formerly Raspbian).
 
-## Installing Raspberry Pi OS
+## Instal Raspberry Pi OS
 
 First, write Raspberry Pi OS to a microSD card (I used Balena Etcher).
 
@@ -28,9 +28,18 @@ psk="your_wifi_password"
 
 The microSD can now be inserted into the raspi.
 
-## First boot
+## SSH in
 
 Once the raspi is plugged in and it boots up, it should be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`. 
 
 This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
 
+## Add boot up script
+
+Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
+
+```
+sudo python /home/pi/sensor_loop.py &
+```
+
+The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
