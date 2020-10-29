@@ -54,13 +54,15 @@ Once the raspi is plugged in and it boots up, it should be possible to SSH into 
 
 This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
 
-## Add boot up script
+## Add script
 
 Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-sudo python3 /home/pi/sensor_loop.py > stdout.txt 2> stderr.txt &
+sudo python3 /home/pi/sensor_loop.py > /home/pi/stdout.txt 2> /home/pi/stderr.txt &
 ```
+
+Note: this also redirects any program output into files for ease of debugging.
 
 The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
 
@@ -73,5 +75,7 @@ Copy the json file containing the service worker credentials to the `/home/pi` f
 ## Install python dependencies
 
 ```
-pip3 install gspread
+sudo -H pip3 install gspread
 ```
+
+Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag roughly means "don't install to the current user's home directory"). It's necessary to install libraries globally because the script is configured to run at boot up by the superuser account on the Pi.
