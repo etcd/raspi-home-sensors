@@ -47,5 +47,5 @@ The `sensor_loop.py` file should then be copied from this repository into the `/
 ## Install python dependencies
 
 ```
-pip install google-api-python-client
+pip3 install google-api-python-client
 ```
