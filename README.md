@@ -48,6 +48,8 @@ The `sensor_loop.py` file should then be copied from this repository into the `/
 
 This project uses a Google Sheet as a database for storing sensor data. In order to do so, we need to set up API access for Google Sheets. [Here](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html)'s the tutorial I used. Note: this requires creating a service account with Google Sheets API access which must belong to a Google Cloud project. In my case, I created this service account under a project called My Google Account as a project for managing API access to things related to my personal Google Account and Drive data.
 
+Upon creation of this service account, Google will allow you to download access credentials for this account as a JSON file. Copy this file to the `/home/pi` folder on the raspi and name it `client_secret.json`. 
+
 ## Install python dependencies
 
 ```
