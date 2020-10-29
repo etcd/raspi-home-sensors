@@ -67,7 +67,7 @@ Note: this also redirects any program output into files for ease of debugging.
 The `sensor_loop.py` file should then be copied from this repository into the `/` folder on the raspi:
 
 ```
-scp \path\to\sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
+scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
 # (this command may not work outright because / is a protected directory, so use an intermediate directory and then sudo mv it to /)
 ```
 
