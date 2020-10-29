@@ -43,3 +43,9 @@ sudo python3 /home/pi/sensor_loop.py &
 ```
 
 The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
+
+## Install python dependencies
+
+```
+pip install google-api-python-client
+```
