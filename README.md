@@ -59,18 +59,18 @@ This IP can be determined by looking for the device named `raspberrypi` on your 
 Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-sudo python3 /home/pi/sensor_loop.py > /home/pi/stdout.txt 2> /home/pi/stderr.txt &
+sudo python3 /sensor_loop.py > /stdout.txt 2> /stderr.txt &
 ```
 
 Note: this also redirects any program output into files for ease of debugging.
 
-The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
+The `sensor_loop.py` file should then be copied from this repository into the `/` folder on the raspi.
 
 Copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
 
 ## Add service worker credentials
 
-Copy the json file containing the service worker credentials to the `/home/pi` folder on the raspi and name it `client_secret.json`.
+Copy the json file containing the service worker credentials to the `/` folder on the raspi and name it `client_secret.json`.
 
 ## Install python dependencies
 
