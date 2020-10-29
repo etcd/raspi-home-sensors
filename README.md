@@ -78,4 +78,4 @@ Copy the json file containing the service worker credentials to the `/home/pi` f
 sudo -H pip3 install gspread
 ```
 
-Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag roughly means "don't install to the current user's home directory"). It's necessary to install libraries globally because the script is configured to run at boot up by the superuser account on the Pi.
+Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag roughly means "don't install to the current user's home directory"). It's necessary to install libraries globally because the script is configured to run at boot up by root (root executes `rc.local`).
