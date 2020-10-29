@@ -2,11 +2,31 @@
 
 This repository contains code for a Raspberry Pi to monitor a home environment via sensors (e.g., hygrometer, thermometer).
 
-# Setup
+# Set up Google Sheets
+
+## Set up Google Sheets API
+
+This project uses a Google Sheet as a database for storing sensor data. In order to do so, we need to set up API access for Google Sheets. This requires creating a service account with Google Sheets API access which must belong to a Google Cloud project. The steps I took were below; adapt to your own use case as you see fit.
+
+First, create a new [Google Cloud](console.cloud.google.com) project called `My Google Account`. This will serve as my gcloud project for managing API access for my personal Google Account and Drive data in general. (If you want to create a bespoke gcloud project for this use case, you can give a more specific name to your gcloud project.)
+
+Then, enable the Google Sheets API for this gcloud project. The page to do this is called `APIs & Services` and can be found on the sidebar. The button with the text `Enable APIs and Services` will take you to another page where you can enable the Google Sheets API.
+
+Next, create a service account. This can be done on the `APIs & Services > Credentials` page. I created a service account named `pi-sensors` and gave it a role of `Project > Editor`. 
+
+Upon creation of this service account, Google will allow you to download access credentials for this account as a JSON file. This file will be copied to the Raspberry Pi in a later step.
+
+## Set up Google Sheet 
+
+After setting up a service account for interacting with the Sheets APi, create a Google Sheet which will act as a database for this project. Name it whatever you want.
+
+Then, share it with the service account's email and give it Editor permissions. The service account's email can be found in `client_secret.json` as the `client_email` field; alternatively, you can find it on Google Cloud on the `APIs & Services > Credentials` page.
+
+# Setup Raspberry Pi
 
 I've found that the most convenient way of using a raspi is through headless setup and operation. The instructions below document how to perform this headless setup with Raspberry Pi OS (formerly Raspbian).
 
-## Instal Raspberry Pi OS
+## Install Raspberry Pi OS
 
 First, write Raspberry Pi OS to a microSD card (I used Balena Etcher).
 
@@ -44,14 +64,14 @@ sudo python3 /home/pi/sensor_loop.py &
 
 The `sensor_loop.py` file should then be copied from this repository into the `/home/pi/` folder on the raspi.
 
-## Set up Google Sheets API
+Copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
 
-This project uses a Google Sheet as a database for storing sensor data. In order to do so, we need to set up API access for Google Sheets. [Here](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html)'s the tutorial I used. Note: this requires creating a service account with Google Sheets API access which must belong to a Google Cloud project. In my case, I created this service account under a project called My Google Account as a project for managing API access to things related to my personal Google Account and Drive data.
+## Add service worker credentials
 
-Upon creation of this service account, Google will allow you to download access credentials for this account as a JSON file. Copy this file to the `/home/pi` folder on the raspi and name it `client_secret.json`. 
+Copy the json file containing the service worker credentials to the `/home/pi` folder on the raspi and name it `client_secret.json`.
 
 ## Install python dependencies
 
 ```
-pip3 install gspread oauth2client
+pip3 install gspread
 ```
