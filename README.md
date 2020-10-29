@@ -1,6 +1,6 @@
 # raspi-home-sensors
 
-This repository contains code for a Raspberry Pi to monitor a home environment via sensors (e.g., hygrometer, thermometer).
+This repository contains code for a Raspberry Pi to monitor a home environment via sensors (e.g., hygrometer, thermometer) and write its data to a Google Sheet.
 
 # Set up Google Sheets
 
@@ -18,7 +18,7 @@ Upon creation of this service account, Google will allow you to download access 
 
 ## Set up Google Sheet 
 
-After setting up a service account for interacting with the Sheets APi, create a Google Sheet which will act as a database for this project. Name it whatever you want.
+After setting up a service account for interacting with the Sheets API, create a Google Sheet which will act as a database for this project. Name it whatever you want.
 
 Then, share it with the service account's email and give it Editor permissions. The service account's email can be found in `client_secret.json` as the `client_email` field; alternatively, you can find it on Google Cloud on the `APIs & Services > Credentials` page.
 
