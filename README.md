@@ -1,8 +1,6 @@
 # raspi-home-sensors
 
-This repository contains code that enables a Raspberry Pi (Model 4 B, although other versions may work) to regularly poll a DHT22 sensor for humidity and temperature and log the data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
-
-Furthermore, since the Raspi Model 4 B comes with wireless integrated LAN, it only needs a single physical connection for power, enabling high portability for this project. 
+This repository contains code that enables any Raspberry Pi to regularly poll a DHT22 sensor for humidity and temperature and log the data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained). The instructions also describe how to set up wireless connectivity on supported Raspberry Pis, so only one physical connection for power is necessary, enabling high portability for this project. 
 
 # Set up Google Sheets
 
