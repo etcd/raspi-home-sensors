@@ -17,3 +17,5 @@ do
     sleep 5
     ((counter++))
 done
+
+echo -e "\nSensor loop exited successfully."

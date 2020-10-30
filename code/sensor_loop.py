@@ -91,7 +91,6 @@ logging.info('Connecting to DHT22 sensor')
 dhtDevice: adafruit_dht.DHT22
 try:
 	dhtDevice = adafruit_dht.DHT22(board.D4)
-	logging.info(type(dhtDevice))
 except RuntimeError as e:
 	logging.critical('Connection failure: DHT sensor could not be found')
 	logging.critical(e)
