@@ -80,7 +80,7 @@ Copy the json file containing the service worker credentials to the `/` folder o
 ## Install python dependencies
 
 ```
-sudo -H pip3 install gspread ntplib
+sudo -H pip3 install gspread ntplib Adafruit_DHT
 ```
 
 Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag roughly means "don't install to the current user's home directory"). It's necessary to install libraries globally because the script is configured to run at boot up by root (root executes `rc.local`).
