@@ -13,12 +13,13 @@ class SheetWrapper:
         logger.info('Writing row to sheet: ' + repr(row))
         try:
             self.sheet.append_row(row)
-            logger.info('Success')
-            return True
         except (gauthExceptions.TransportError, reqExceptions.ConnectionError, reqExceptions.ReadTimeout) as e:
             logger.critical('Connection failure when logging data')
             logger.critical(e)
             return False
+
+        logger.info('Success')
+        return True
 
 def openSheet(url, worksheet, creds):
     # Create a client to interact with the Google Drive API
