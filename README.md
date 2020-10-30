@@ -72,7 +72,8 @@ The `sensor_loop.py` file should then be copied from this repository into the `/
 
 ```
 scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
-# (this command may not work outright because / is a protected directory, so use an intermediate directory and then sudo mv it to /)
+# (this command may not work outright because / is a protected directory,
+# so use an intermediate directory and then sudo mv it to /)
 ```
 
 Copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
