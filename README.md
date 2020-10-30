@@ -54,7 +54,7 @@ The microSD can now be inserted into the raspi.
 
 ## SSH in
 
-Once the raspi is plugged in and it boots up, it should be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`. 
+Once the raspi is plugged in and it boots up, it should be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`. The default password for Raspberry Pi OS is `raspberry`. The login message should inform you to change the password using `passwd`, as leaving the default is a security risk.
 
 This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
 
