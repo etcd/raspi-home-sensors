@@ -65,9 +65,10 @@ Next, we configure our script to run every time the raspi starts up (i.e., is pl
 The `meta_loop.sh` and `sensor_loop.py` files should then be copied from this repository into the `/` folder on the raspi:
 
 ```
+scp /path/to/meta_loop.py pi@192.168.LOCAL.IP:/meta_loop.py
 scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
 # (this command may not work outright because / is a protected directory,
-# so use an intermediate directory and then sudo mv it to /)
+# so use an intermediate directory and then sudo mv it)
 ```
 
 Copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
