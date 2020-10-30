@@ -22,9 +22,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    logger.info('-------------------------------')
-    logger.info('        Starting script        ')
-    logger.info('-------------------------------')
+    logger.info('-------------------------------------------------------------')
+    logger.info('                       Starting script                       ')
+    logger.info('-------------------------------------------------------------')
 
     # Parse arguments passed into script
     parser = argparse.ArgumentParser()
@@ -67,12 +67,7 @@ if __name__ == '__main__':
         row = [curr_date, curr_time, humidity]
 
         # Write row to sheet
-        logger.info('Writing data: ' + repr(row))
-        try:
-            sheet.append_row(row)
-            logger.info('Success')
-        except (gauthExceptions.TransportError, reqExceptions.ConnectionError, reqExceptions.ReadTimeout) as e:
-            logger.critical('Connection failure when logging data')
-            logger.critical(e)
+        if not sheet.appendRow(row):
+            sys.exit(1)
 
         sleep(15)
