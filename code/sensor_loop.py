@@ -35,7 +35,7 @@ logging.basicConfig(
 	datefmt='%Y-%m-%d %H:%M:%S',
 	handlers=[
         logging.FileHandler(os.path.join(__location__, 'sensor_loop.log')),
-        logging.StreamHandler()
+        logging.StreamHandler(sys.stdout)
     ],
 	level=logging.INFO
 	)
