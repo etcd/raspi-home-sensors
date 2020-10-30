@@ -1,30 +1,15 @@
 import argparse
 import logging
-import ntplib
-import os
 import sys
 from datetime import datetime
 from google.auth import exceptions as gauthExceptions
 from requests import exceptions as reqExceptions
-from socket import gaierror
 from time import sleep
 
 from util import waitForSysClockSync
 from sheets import openSheet
+from dht_sensor import connectDHTSensor
 
-try:
-    import adafruit_dht
-    import board
-except (ImportError, NotImplementedError) as e:
-    class MockAdafruitDHT:
-        temperature = 999999
-        humidity = 888888
-        def DHT22(self, pin):
-            return self
-    class MockBoard:
-        D4 = 111111
-    adafruit_dht = MockAdafruitDHT()
-    board = MockBoard()
 
 # Configure logger
 logging.basicConfig(
@@ -36,10 +21,12 @@ logging.basicConfig(
     level=logging.INFO
     )
 
+logger = logging.getLogger(__name__)
+
 if __name__ == '__main__':
-    logging.info('-------------------------------')
-    logging.info('        Starting script        ')
-    logging.info('-------------------------------')
+    logger.info('-------------------------------')
+    logger.info('        Starting script        ')
+    logger.info('-------------------------------')
 
     # Parse arguments passed into script
     parser = argparse.ArgumentParser()
@@ -50,16 +37,8 @@ if __name__ == '__main__':
     if not waitForSysClockSync():
         sys.exit(1)
 
-    # Connect to sensor
-    logging.info('Connecting to DHT22 sensor')
-    dhtDevice: adafruit_dht.DHT22
-    try:
-        dhtDevice = adafruit_dht.DHT22(board.D4)
-    except RuntimeError as e:
-        logging.critical('Connection failure: DHT sensor could not be found')
-        logging.critical(e)
-        sys.exit(1)
-    logging.info('Success')
+    # Connect to DHT sensor
+    dhtSensor = connectDHTSensor()
 
     # Open sheet
     sheet = openSheet(args.sheetUrl, 'Humidity', args.secret)
@@ -67,17 +46,17 @@ if __name__ == '__main__':
     # Program loop
     while True:
         # Read from sensor
-        logging.info('Reading from DHT22 sensor')
+        logger.info('Reading from DHT22 sensor')
         humidity: float
         temperature: float
         try:
-            humidity = dhtDevice.humidity
-            temperature = dhtDevice.temperature
+            humidity = dhtSensor.humidity
+            temperature = dhtSensor.temperature
         except RuntimeError as e:
-            logging.critical('Sensor failure: DHT sensor could not be polled')
-            logging.critical(e)
+            logger.critical('Sensor failure: DHT sensor could not be polled')
+            logger.critical(e)
             sys.exit(1)
-        logging.info('Success')
+        logger.info('Success')
 
         # Generate row
         curr_date = datetime.now().strftime('%m/%d/%Y')
@@ -85,12 +64,12 @@ if __name__ == '__main__':
         row = [curr_date, curr_time, humidity]
 
         # Write row to sheet
-        logging.info('Writing data: ' + repr(row))
+        logger.info('Writing data: ' + repr(row))
         try:
             sheet.append_row(row)
-            logging.info('Success')
+            logger.info('Success')
         except (gauthExceptions.TransportError, reqExceptions.ConnectionError, reqExceptions.ReadTimeout) as e:
-            logging.critical('Connection failure when logging data')
-            logging.critical(e)
+            logger.critical('Connection failure when logging data')
+            logger.critical(e)
 
         sleep(15)
