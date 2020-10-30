@@ -66,7 +66,7 @@ do
 done
 ```
 
-Note: this redirects any program output into `stdout.txt` and `stderr.txt` files for ease of debugging. The outer [until loop](https://linuxize.com/post/bash-until-loop/) scaffolding is a popular bash scripting pattern for restarting a program when it fails.
+Note: The outer [until loop](https://linuxize.com/post/bash-until-loop/) scaffolding is a popular bash scripting pattern for restarting a program when it fails. Also, this redirects any program output into `stdout.txt` and `stderr.txt` files for ease of debugging. 
 
 The `sensor_loop.py` file should then be copied from this repository into the `/` folder on the raspi:
 
