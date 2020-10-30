@@ -20,12 +20,13 @@ counter=0
 echo "-----------------------------------" >>$LOG_PATH
 echo "        Starting meta loop         " >>$LOG_PATH
 echo "-----------------------------------" >>$LOG_PATH
-until su pi -c "python3 ${CODE_PATH}/sensor_loop.py" >>$LOG_PATH 2>&1
+until su pi -c "python3 ${CODE_PATH}/sensor_loop.py" >>/dev/null 2>>$LOG_PATH
 do
-    echo "Sensor loop failed critically with the output above (failure count since restart: $counter)." >>$LOG_PATH
-    echo "------------------------------------" >>$LOG_PATH
-    echo "        Respawning script...        " >>$LOG_PATH
-    echo "------------------------------------" >>$LOG_PATH
+    echo "------------------------------------------------------------" >>$LOG_PATH
+    echo "    Sensor loop failed critically with the output above.    " >>$LOG_PATH
+    echo "           Failure count since restart: $counter.           " >>$LOG_PATH
+    echo "                    Respawning script...                    " >>$LOG_PATH
+    echo "------------------------------------------------------------" >>$LOG_PATH
     sleep 5
     ((counter++))
 done
