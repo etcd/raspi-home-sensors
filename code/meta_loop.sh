@@ -15,6 +15,7 @@ SCRIPT_PATH=`dirname "$0"`
 counter=0
 
 # Run meta_loop.sh as the user `pi`; respawns script upon failure
+echo -e "Starting meta loop."
 until su pi -c 'python3 sensor_loop.py'
 do
     echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> "${SCRIPT_PATH}/meta_loop.log"
@@ -22,4 +23,4 @@ do
     ((counter++))
 done
 
-echo -e "\nSensor loop exited successfully."
+echo -e "\nSensor loop exited successfully, causing meta loop to exit successfully."

@@ -95,7 +95,6 @@ except RuntimeError as e:
 	logging.critical('Connection failure: DHT sensor could not be found')
 	logging.critical(e)
 	sys.exit(1)
-
 logging.info('Success')
 
 # Open sheet
@@ -105,8 +104,15 @@ sheet = openSheet(SHEET_URL, 'Humidity', SVC_ACC_CREDS)
 while True:
 	# Read from sensor
 	logging.info('Reading from DHT22 sensor')
-	humidity = dhtDevice.humidity
-	temperature = dhtDevice.temperature
+	humidity: float
+	temperature: float
+	try:
+		humidity = dhtDevice.humidity
+		temperature = dhtDevice.temperature
+	except RuntimeError as e:
+		logging.critical('Sensor failure: DHT sensor could not be polled')
+		logging.critical(e)
+		sys.exit(1)
 	logging.info('Success')
 
 	# Generate row
