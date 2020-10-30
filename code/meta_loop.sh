@@ -17,12 +17,12 @@ LOG_PATH="${SCRIPT_PATH}/meta_loop.log"
 counter=0
 
 # Run meta_loop.sh as the user `pi`; respawns script upon failure
-echo "Starting meta loop." >> LOG_PATH
+echo "Starting meta loop." >> $LOG_PATH
 until su pi -c 'python3 sensor_loop.py'
 do
-    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..." >> LOG_PATH
+    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..." >> $LOG_PATH
     sleep 5
     ((counter++))
 done
 
-echo -e "\nSensor loop exited successfully, causing meta loop to exit successfully." >> LOG_PATH
+echo -e "\nSensor loop exited successfully, causing meta loop to exit successfully." >> $LOG_PATH
