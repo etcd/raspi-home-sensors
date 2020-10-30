@@ -25,11 +25,13 @@ counter=0
 
 # Run meta_loop.sh as the user `pi`; respawns script upon failure
 echo "-----------------------------------" >>$META_LOG
+echo "    $(date +'%Y-%m-%d %H:%M:%S')   " >>$META_LOG
 echo "        Starting meta loop         " >>$META_LOG
 echo "-----------------------------------" >>$META_LOG
 until su pi -c "python3 ${CODE_PATH}/sensor_loop ${SECRET_PATH} ${SHEET_URL}" >>$SENSOR_LOG 2>>$META_LOG
 do
     echo "------------------------------------------------------------" >>$META_LOG
+    echo "                $(date +'%Y-%m-%d %H:%M:%S')                " >>$META_LOG
     echo "    Sensor loop failed critically (stderr output above).    " >>$META_LOG
     echo "           Failure count since restart: $counter.           " >>$META_LOG
     echo "                    Respawning script...                    " >>$META_LOG
