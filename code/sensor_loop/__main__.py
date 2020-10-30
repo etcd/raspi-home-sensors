@@ -2,8 +2,6 @@ import argparse
 import logging
 import sys
 from datetime import datetime
-from google.auth import exceptions as gauthExceptions
-from requests import exceptions as reqExceptions
 from time import sleep
 
 from util import waitForSysClockSync
@@ -21,6 +19,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+# Entrypoint
 if __name__ == '__main__':
     logger.info('-------------------------------------------------------------')
     logger.info('                       Starting script                       ')
