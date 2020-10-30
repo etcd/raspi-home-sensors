@@ -54,21 +54,15 @@ Once the raspi is plugged in and it boots up, it should be possible to SSH into 
 
 This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
 
-## Add script
+## Add scripts
 
-Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
+Next, we configure our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-until sudo python3 /sensor_loop.py >> /stdout.txt 2> /stderr.txt &
-do
-    echo "Sensor loop failed. Respawning script..."  >> /stdout.txt
-    sleep 10
-done
+/meta_loop.sh >> /stdout.txt 2> /stderr.txt &
 ```
 
-Note: The outer [until loop](https://linuxize.com/post/bash-until-loop/) scaffolding is a popular bash scripting pattern for restarting a program when it fails. Also, this redirects any program output into `stdout.txt` and `stderr.txt` files for ease of debugging. 
-
-The `sensor_loop.py` file should then be copied from this repository into the `/` folder on the raspi:
+The `meta_loop.sh` and `sensor_loop.py` files should then be copied from this repository into the `/` folder on the raspi:
 
 ```
 scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
