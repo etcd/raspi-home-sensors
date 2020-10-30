@@ -10,9 +10,10 @@
 
 counter=0
 
+# Run meta_loop.sh as the user `pi`, respawning script upon failure
 until su pi -c 'python3 sensor_loop.py >> stdout.txt 2> stderr.txt'
 do
     echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> stdout.txt
-    sleep 10
+    sleep 5
     ((counter++))
 done
