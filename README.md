@@ -68,7 +68,6 @@ git clone https://github.com/etcd/raspi-home-sensors.git
 Then, configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-# Run meta_loop.sh as the user `pi`
 /home/pi/raspi-home-sensors/code/meta_loop.sh &
 ```
 
