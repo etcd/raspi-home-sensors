@@ -1,6 +1,6 @@
 # raspi-home-sensors
 
-This repository contains code that enables a Raspberry Pi (Model 4 B, although other raspis may work) to regularly poll a DHT22 sensor for humidity and temperature and write its data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
+This repository contains code that enables a Raspberry Pi (Model 4 B, although other versions may work) to regularly poll a DHT22 sensor for humidity and temperature and log the data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
 
 Furthermore, since the Raspi Model 4 B comes with wireless integrated LAN, it only needs a single physical connection for power, enabling high portability for this project. 
 
@@ -90,10 +90,10 @@ Copy the json file containing the service worker credentials to the `/` folder o
 ## Install dependencies
 
 ```
-# Via apt
+# Dependencies from apt
 sudo apt-get install libgpiod2
-# Via pip3
+# Dependencies from pip3
 sudo -H pip3 install gspread ntplib adafruit-circuitpython-dht
 ```
 
-Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag roughly means "don't install to the current user's home directory"). It's necessary to install libraries globally because the script is configured to run at boot up by root (root executes `rc.local`).
+Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag tells sudo to use the superuser's home directory). It's necessary to install libraries globally because the script is configured to run at boot time by root (root executes `rc.local`).
