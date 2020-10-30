@@ -8,6 +8,7 @@
 # Also, this redirects any program output into `stdout.txt` and `stderr.txt` files
 # for ease of debugging. 
 
+# URL of Google Sheet
 SHEET_URL='https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
 
 # Path where this script is located
