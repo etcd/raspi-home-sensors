@@ -8,12 +8,16 @@
 # Also, this redirects any program output into `stdout.txt` and `stderr.txt` files
 # for ease of debugging. 
 
+# Path where this script is located
+SCRIPT_PATH=`dirname "$0"`
+
+# Counter for number of times until loop has run
 counter=0
 
 # Run meta_loop.sh as the user `pi`; respawns script upon failure
 until su pi -c 'python3 sensor_loop.py'
 do
-    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> meta_loop.log
+    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> "${SCRIPT_PATH}/meta_loop.log"
     sleep 5
     ((counter++))
 done
