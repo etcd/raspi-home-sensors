@@ -61,14 +61,15 @@ The IP of the raspi can be determined by looking for the device named `raspberry
 Next, clone this code to the raspi:
 
 ```
-git clone https://github.com/etcd/raspi-home-sensors.git # goes to /home/pi
+# clone to /home/pi
+git clone https://github.com/etcd/raspi-home-sensors.git
 ```
 
 Then, configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
 # Run meta_loop.sh as the user `pi`
-su pi -c '/home/pi/raspi-home-sensors/code/meta_loop.sh' &
+/home/pi/raspi-home-sensors/code/meta_loop.sh &
 ```
 
 The `meta_loop.sh` file also needs to be made executable once moved onto the raspi:
