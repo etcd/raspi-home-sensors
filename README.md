@@ -58,7 +58,7 @@ The IP of the raspi can be determined by looking for the device named `raspberry
 
 ## Add scripts
 
-Next, clone this code to the raspi:
+Next, clone this repository to the raspi:
 
 ```
 # clone to /home/pi
@@ -77,7 +77,7 @@ The `meta_loop.sh` file also needs to be made executable once moved onto the ras
 chmod +x meta_loop.sh
 ```
 
-Finally, copy the URL of the Google Sheet into `sensor_loop.py` into the global named `SHEET_URL`.
+Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable named `SHEET_URL`.
 
 ## Add service worker credentials
 
