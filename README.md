@@ -85,9 +85,12 @@ Finally, copy the URL of the Google Sheet used for this project into the global 
 
 Copy the json file containing the service worker credentials to the `/` folder on the raspi and name it `client_secret.json`.
 
-## Install python dependencies
+## Install dependencies
 
 ```
+# Via apt
+sudo apt-get install libgpiod2
+# Via pip3
 sudo -H pip3 install gspread ntplib adafruit-circuitpython-dht
 ```
 
