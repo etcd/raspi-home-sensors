@@ -52,25 +52,23 @@ The microSD can now be inserted into the raspi.
 
 ## SSH in
 
-Once the raspi is plugged in and it boots up, it should be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`. The default password for Raspberry Pi OS is `raspberry`. The login message should inform you to change the password using `passwd`, as leaving the default is a security risk.
+Once the raspi is plugged in and it boots up, it should automatically be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
 
-This IP can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. I would recommend logging into your router, since there's a good chance you'll also want to bind this device to a static IP.
+The IP of the raspi can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
 
 ## Add scripts
 
-Next, we configure our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
+Next, clone this code to the raspi:
 
 ```
-/meta_loop.sh >> /stdout.txt 2> /stderr.txt &
+git clone https://github.com/etcd/raspi-home-sensors.git # goes to /home/pi
 ```
 
-The `meta_loop.sh` and `sensor_loop.py` files should then be copied from this repository into the `/` folder on the raspi:
+Then, configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-scp /path/to/meta_loop.py pi@192.168.LOCAL.IP:/meta_loop.py
-scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
-# (this command may not work outright because / is a protected directory,
-# so use an intermediate directory and then sudo mv it)
+# Run meta_loop.sh as the user `pi`
+su pi -c '/home/pi/raspi-home-sensors/code/meta_loop.sh' &
 ```
 
 The `meta_loop.sh` file also needs to be made executable once moved onto the raspi:
@@ -79,11 +77,15 @@ The `meta_loop.sh` file also needs to be made executable once moved onto the ras
 chmod +x meta_loop.sh
 ```
 
-Finally, copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
+Finally, copy the URL of the Google Sheet into `sensor_loop.py` into the global named `SHEET_URL`.
 
 ## Add service worker credentials
 
-Copy the json file containing the service worker credentials to the `/` folder on the raspi and name it `client_secret.json`.
+Copy the json file containing the service worker credentials to the raspi and name it `client_secret.json`:
+
+```
+scp /path/on/local/computer/client_secret.json pi@192.168.LOCAL.IP:/home/pi/raspi-home-sensors/code/client_secret.json
+```
 
 ## Install dependencies
 
@@ -91,7 +93,5 @@ Copy the json file containing the service worker credentials to the `/` folder o
 # Dependencies from apt
 sudo apt-get install libgpiod2
 # Dependencies from pip3
-sudo -H pip3 install gspread ntplib adafruit-circuitpython-dht
+pip3 install gspread ntplib adafruit-circuitpython-dht
 ```
-
-Note: `sudo -H` is necessary in order to install libraries globally (the `H` flag tells sudo to use the superuser's home directory). It's necessary to install libraries globally because the script is configured to run at boot time by root (root executes `rc.local`).
