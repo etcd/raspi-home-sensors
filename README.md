@@ -4,9 +4,11 @@ This repository contains code for a Raspberry Pi to monitor a home environment v
 
 # Set up Google Sheets
 
+This project uses a Google Sheet as a database for storing sensor data.
+
 ## Set up Google Sheets API
 
-This project uses a Google Sheet as a database for storing sensor data. In order to do so, we need to set up API access for Google Sheets. This requires creating a service account with Google Sheets API access which must belong to a Google Cloud project. The steps I took were below; adapt to your own use case as you see fit.
+First, we need to set up API access for Google Sheets. This requires creating a service account with Google Sheets API access which must belong to a Google Cloud project. The steps I took were below; adapt to your own use case as you see fit.
 
 First, create a new [Google Cloud](console.cloud.google.com) project called `My Google Account`. This will serve as my gcloud project for managing API access for my personal Google Account and Drive data in general. (If you want to create a bespoke gcloud project for this use case, you can give a more specific name to your gcloud project.)
 
