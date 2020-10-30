@@ -73,7 +73,13 @@ scp /path/to/sensor_loop.py pi@192.168.LOCAL.IP:/sensor_loop.py
 # so use an intermediate directory and then sudo mv it)
 ```
 
-Copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
+The `meta_loop.sh` file also needs to be made executable once moved onto the raspi:
+
+```
+chmod +x meta_loop.sh
+```
+
+Finally, copy the URL of the Google Sheet used for this project into the global named `SHEET_URL`.
 
 ## Add service worker credentials
 
