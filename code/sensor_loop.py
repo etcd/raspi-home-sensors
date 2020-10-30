@@ -87,25 +87,36 @@ if not waitForSysClockSync():
 	sys.exit(1)
 
 # Connect to sensor
-dhtDevice = adafruit_dht.DHT22(board.D4)
+logging.info('Connecting to DHT22 sensor')
+dhtDevice: adafruit_dht.DHT22
+try:
+	dhtDevice = adafruit_dht.DHT22(board.D4)
+	logging.info(type(dhtDevice))
+except RuntimeError as e:
+	logging.critical('Connection failure: DHT sensor could not be found')
+	logging.critical(e)
+	sys.exit(1)
+
+logging.info('Success')
 
 # Open sheet
 sheet = openSheet(SHEET_URL, 'Humidity', SVC_ACC_CREDS)
 
 # Program loop
 while True:
-	curr_date = datetime.now().strftime('%m/%d/%Y')
-	curr_time = datetime.now().strftime('%H:%M:%S')
-
+	# Read from sensor
 	logging.info('Reading from DHT22 sensor')
 	humidity = dhtDevice.humidity
 	temperature = dhtDevice.temperature
 	logging.info('Success')
 
+	# Generate row
+	curr_date = datetime.now().strftime('%m/%d/%Y')
+	curr_time = datetime.now().strftime('%H:%M:%S')
 	row = [curr_date, curr_time, humidity]
-	logging.info('Writing data: ' + repr(row))
 
-	# Write data to sheet
+	# Write row to sheet
+	logging.info('Writing data: ' + repr(row))
 	try:
 		sheet.append_row(row)
 		logging.info('Success')
