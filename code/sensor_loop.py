@@ -1,4 +1,5 @@
 import gspread
+import logging
 import ntplib
 import sys
 from datetime import datetime
@@ -24,26 +25,37 @@ except (ImportError, NotImplementedError) as e:
 SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
 SVC_ACC_CREDS = 'client_secret.json'
 
+# Configure logger
+logging.basicConfig(
+	format='[%(asctime)s] %(levelname)s: %(message)s',
+	datefmt='%Y-%m-%d %H:%M:%S',
+	handlers=[
+        logging.FileHandler("sensor_loop.log"),
+        logging.StreamHandler()
+    ],
+	level=logging.INFO
+	)
+
 def waitForSysClockSync(timeout=30, threshold=15):
-	print('Waiting for system clock to sync with NTP server')
+	logging.info('Waiting for system clock to sync with NTP server')
 	ntpReq: ntplib.NTPStats # declare variable and its type without assignment
 	try:
 		ntpReq = ntplib.NTPClient().request('pool.ntp.org', version=3)
 	except (ntplib.NTPException, gaierror) as e:
-		print('Could not connect to NTP server')
-		print(e)
+		logging.critical('Could not connect to NTP server')
+		logging.critical(e)
 		return False
 	currTime = ntpReq.tx_time
 	for i in range(timeout):
 		delta = abs(time() - currTime)
 		if delta < threshold:
-			print('System clock is synced with NTP server')
+			logging.info('Success')
 			return True
 		else:
-			print('.')
+			logging.info('.')
 		sleep(1)
 
-	print('System clock did not sync with NTP server within timeout')
+	logging.critical('System clock failed to sync with NTP server within timeout (%s seconds)', timeout)
 	return False
 
 def openSheet(url, worksheet, creds):
@@ -51,27 +63,28 @@ def openSheet(url, worksheet, creds):
 	gc = gspread.service_account(filename=creds)
 
 	# Open spreadsheet
-	print('Attempting to open spreadsheet')
+	logging.info('Authenticating and opening spreadsheet')
 	sheet: gspread.models.Worksheet # declare variable and its type without assignment
 	try:
 		sheet = gc.open_by_url(url).worksheet(worksheet)
 	except gauthExceptions.TransportError as e:
-		print('Failed to connect when opening spreadsheet:')
-		print(e)
+		logging.critical('Connection failure when opening spreadsheet')
+		logging.critical(e)
 		sys.exit(1)
 	except gauthExceptions.GoogleAuthError as e:
-		print('Failed to authenticate when opening spreadsheet:')
-		print(e)
+		logging.critical('Authentication failure when opening spreadsheet')
+		logging.critical(e)
 		sys.exit(1)
 
-	print('Successfully authenticated')
+	logging.info('Success')
 	return sheet
 
+logging.info('-------------------------------')
+logging.info('        Starting script        ')
+logging.info('-------------------------------')
 
 if not waitForSysClockSync():
 	sys.exit(1)
-
-print('[' + datetime.now().strftime('%m/%d/%Y %H:%M:%S') + '] Starting script')
 
 # Connect to sensor
 dhtDevice = adafruit_dht.DHT22(board.D4)
@@ -84,20 +97,20 @@ while True:
 	curr_date = datetime.now().strftime('%m/%d/%Y')
 	curr_time = datetime.now().strftime('%H:%M:%S')
 
-	print('Attempting to read from DHT22 sensor')
+	logging.info('Reading from DHT22 sensor')
 	humidity = dhtDevice.humidity
 	temperature = dhtDevice.temperature
-	print('Successfully read from DHT22 sensor')
+	logging.info('Success')
 
 	row = [curr_date, curr_time, humidity]
-	print('Attempting to write: ' + repr(row))
+	logging.info('Writing data: ' + repr(row))
 
 	# Write data to sheet
 	try:
 		sheet.append_row(row)
-		print('Successfully wrote')
+		logging.info('Success')
 	except (gauthExceptions.TransportError, reqExceptions.ConnectionError, reqExceptions.ReadTimeout) as e:
-		print('Failed to connect when logging data:')
-		print(e)
+		logging.critical('Connection failure when logging data')
+		logging.critical(e)
 
 	sleep(15)
