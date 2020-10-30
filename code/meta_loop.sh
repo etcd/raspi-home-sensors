@@ -7,9 +7,9 @@
 
 counter=0
 
-until python3 /sensor_loop.py >> /stdout.txt 2> /stderr.txt
+until python3 sensor_loop.py >> stdout.txt 2> stderr.txt
 do
-    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> /stdout.txt
+    echo "Sensor loop failed (failure count since restart: $counter). Respawning script..."  >> stdout.txt
     sleep 10
     ((counter++))
 done
