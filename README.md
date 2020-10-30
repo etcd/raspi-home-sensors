@@ -1,6 +1,8 @@
 # raspi-home-sensors
 
-This repository contains code for a Raspberry Pi to monitor a home environment via sensors (e.g., hygrometer, thermometer) and write its data to a Google Sheet.
+This repository contains code that enables a Raspberry Pi (Model 4 B, although other raspis may work) to regularly poll a DHT22 sensor for humidity and temperature and write its data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
+
+Furthermore, since the Raspi Model 4 B comes with wireless integrated LAN, it only needs a single physical connection for power, enabling high portability for this project. 
 
 # Set up Google Sheets
 
