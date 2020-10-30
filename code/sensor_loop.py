@@ -1,13 +1,13 @@
 import gspread
 import logging
 import ntplib
+import os
 import sys
 from datetime import datetime
 from google.auth import exceptions as gauthExceptions
 from requests import exceptions as reqExceptions
 from socket import gaierror
 from time import sleep, time
-
 try:
 	import adafruit_dht
 	import board
@@ -22,15 +22,19 @@ except (ImportError, NotImplementedError) as e:
 	adafruit_dht = MockAdafruitDHT()
 	board = MockBoard()
 
+# Path of the containing directory of this script
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
-SVC_ACC_CREDS = 'client_secret.json'
+SVC_ACC_CREDS = os.path.join(__location__, 'client_secret.json')
 
 # Configure logger
 logging.basicConfig(
 	format='[%(asctime)s] %(levelname)s: %(message)s',
 	datefmt='%Y-%m-%d %H:%M:%S',
 	handlers=[
-        logging.FileHandler("sensor_loop.log"),
+        logging.FileHandler(os.path.join(__location__, 'sensor_loop.log')),
         logging.StreamHandler()
     ],
 	level=logging.INFO
