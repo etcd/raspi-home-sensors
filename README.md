@@ -59,10 +59,14 @@ This IP can be determined by looking for the device named `raspberrypi` on your 
 Next, we add our script to run every time the raspi starts up (i.e., is plugged in). To do so, edit `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
 ```
-sudo python3 /sensor_loop.py >> /stdout.txt 2> /stderr.txt &
+until sudo python3 /sensor_loop.py >> /stdout.txt 2> /stderr.txt &
+do
+    echo "Sensor loop failed. Respawning script..."  >> /stdout.txt
+    sleep 10
+done
 ```
 
-Note: this also redirects any program output into files for ease of debugging.
+Note: this redirects any program output into `stdout.txt` and `stderr.txt` files for ease of debugging. The outer [until loop](https://linuxize.com/post/bash-until-loop/) scaffolding is a popular bash scripting pattern for restarting a program when it fails.
 
 The `sensor_loop.py` file should then be copied from this repository into the `/` folder on the raspi:
 
