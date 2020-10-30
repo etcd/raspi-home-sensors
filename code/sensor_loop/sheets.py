@@ -16,8 +16,8 @@ class SheetWrapper:
             logger.info('Success')
             return True
         except (gauthExceptions.TransportError, reqExceptions.ConnectionError, reqExceptions.ReadTimeout) as e:
-            logger.error('Connection failure when logging data')
-            logger.error(e)
+            logger.critical('Connection failure when logging data')
+            logger.critical(e)
             return False
 
 def openSheet(url, worksheet, creds):
@@ -30,8 +30,8 @@ def openSheet(url, worksheet, creds):
     try:
         sheet = gc.open_by_url(url).worksheet(worksheet)
     except gauthExceptions.TransportError as e:
-        logger.error('Connection failure when opening spreadsheet')
-        logger.error(e)
+        logger.critical('Connection failure when opening spreadsheet')
+        logger.critical(e)
         return False
     except gauthExceptions.GoogleAuthError as e:
         logger.critical('Authentication failure when opening spreadsheet')

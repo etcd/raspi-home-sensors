@@ -8,7 +8,7 @@ from time import sleep
 
 from util import waitForSysClockSync
 from sheets import openSheet
-from dht_sensor import connectDHTSensor
+from dht_sensor import connect as connectDHT
 
 
 # Configure logger
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Connect to DHT sensor
-    dhtSensor = connectDHTSensor()
+    dhtSensor = connectDHT()
     if not dhtSensor:
         sys.exit(1)
 
@@ -49,17 +49,7 @@ if __name__ == '__main__':
     # Program loop
     while True:
         # Read from sensor
-        logger.info('Reading from DHT22 sensor')
-        humidity: float
-        temperature: float
-        try:
-            humidity = dhtSensor.humidity
-            temperature = dhtSensor.temperature
-        except RuntimeError as e:
-            logger.critical('Sensor failure: DHT sensor could not be polled')
-            logger.critical(e)
-            sys.exit(1)
-        logger.info('Success')
+        humidity, temperature = dhtSensor.read()
 
         # Generate row
         curr_date = datetime.now().strftime('%m/%d/%Y')
