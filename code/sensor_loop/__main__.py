@@ -15,10 +15,8 @@ from dht_sensor import connectDHTSensor
 logging.basicConfig(
     format='[%(asctime)s] %(levelname)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ],
-    level=logging.INFO
+    level=logging.INFO,
+    handlers=[logging.StreamHandler(sys.stdout),]
     )
 
 logger = logging.getLogger(__name__)
@@ -34,14 +32,19 @@ if __name__ == '__main__':
     parser.add_argument('sheetUrl', help='URL to Google Sheet used for storing data.')
     args = parser.parse_args()
 
+    # Wait for system clock to sync via NTP
     if not waitForSysClockSync():
         sys.exit(1)
 
     # Connect to DHT sensor
     dhtSensor = connectDHTSensor()
+    if not dhtSensor:
+        sys.exit(1)
 
     # Open sheet
     sheet = openSheet(args.sheetUrl, 'Humidity', args.secret)
+    if not sheet:
+        sys.exit(1)
 
     # Program loop
     while True:

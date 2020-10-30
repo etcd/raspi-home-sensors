@@ -1,8 +1,4 @@
 import logging
-import sys
-
-logger = logging.getLogger(__name__)
-
 try:
     import adafruit_dht
     import board
@@ -17,6 +13,8 @@ except (ImportError, NotImplementedError) as e:
     adafruit_dht = MockAdafruitDHT()
     board = MockBoard()
 
+logger = logging.getLogger(__name__)
+
 def connectDHTSensor():    
     # Connect to sensor
     logging.info('Connecting to DHT22 sensor')
@@ -26,7 +24,7 @@ def connectDHTSensor():
     except RuntimeError as e:
         logging.critical('Connection failure: DHT sensor could not be found')
         logging.critical(e)
-        sys.exit(1)
-    logging.info('Success')
+        return False
 
+    logging.info('Success')
     return dhtSensor

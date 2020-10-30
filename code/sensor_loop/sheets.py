@@ -1,6 +1,5 @@
 import gspread
 import logging
-import sys
 from google.auth import exceptions as gauthExceptions
 
 logger = logging.getLogger(__name__)
@@ -17,11 +16,11 @@ def openSheet(url, worksheet, creds):
     except gauthExceptions.TransportError as e:
         logger.critical('Connection failure when opening spreadsheet')
         logger.critical(e)
-        sys.exit(1)
+        return False
     except gauthExceptions.GoogleAuthError as e:
         logger.critical('Authentication failure when opening spreadsheet')
         logger.critical(e)
-        sys.exit(1)
+        return False
 
     logger.info('Success')
     return sheet
