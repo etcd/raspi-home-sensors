@@ -17,7 +17,7 @@ except (ImportError, NotImplementedError) as e:
 		def DHT22(self, pin):
 			return self
 	class MockBoard:
-		D18 = 111111
+		D4 = 111111
 	adafruit_dht = MockAdafruitDHT()
 	board = MockBoard()
 
@@ -74,7 +74,7 @@ if not waitForSysClockSync():
 print('[' + datetime.now().strftime('%m/%d/%Y %H:%M:%S') + '] Starting script')
 
 # Connect to sensor
-dhtDevice = adafruit_dht.DHT22(board.D18)
+dhtDevice = adafruit_dht.DHT22(board.D4)
 
 # Open sheet
 sheet = openSheet(SHEET_URL, 'Humidity', SVC_ACC_CREDS)
