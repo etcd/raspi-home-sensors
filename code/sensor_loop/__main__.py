@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 from time import sleep
 
-from util import waitForSysClockSync
+from util import getMac, waitForSysClockSync
 from sheets import openSheet
 from dht_sensor import connect as connectDHT
 
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         # Generate row
         curr_date = datetime.now().strftime('%m/%d/%Y')
         curr_time = datetime.now().strftime('%H:%M:%S')
-        row = [curr_date, curr_time, humidity, temperature]
+        row = [curr_date, curr_time, getMac(), humidity, temperature, ]
 
         # Write row to sheet
         if not sheet.appendRow(row):

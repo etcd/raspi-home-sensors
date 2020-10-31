@@ -1,9 +1,21 @@
 import logging
+import netifaces
 import ntplib
 from socket import gaierror
 from time import sleep, time
 
 logger = logging.getLogger(__name__)
+
+
+def getMac():
+    # this function gets the mac address of the current device's default internet gateway
+
+    # get the interface name
+    interface = netifaces.gateways()['default'][netifaces.AF_INET][1]
+    # get the mac of the interface
+    mac = netifaces.ifaddresses(interface)[netifaces.AF_LINK][0]['addr']
+
+    return mac
 
 def waitForSysClockSync(timeout=30, threshold=15):
     logger.info('Waiting for system clock to sync with NTP server')
