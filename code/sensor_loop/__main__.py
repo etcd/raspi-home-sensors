@@ -9,6 +9,8 @@ from sheets import openSheet
 from dht_sensor import connect as connectDHT
 
 
+POLLING_FREQUENCY = 15
+
 # Configure logger
 logging.basicConfig(
     format='[%(asctime)s] %(levelname)s: %(message)s',
@@ -41,7 +43,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Open sheet
-    sheet = openSheet(args.sheetUrl, 'Humidity', args.secret)
+    sheet = openSheet(args.sheetUrl, 'DHT22', args.secret)
     if not sheet:
         sys.exit(1)
 
@@ -53,10 +55,10 @@ if __name__ == '__main__':
         # Generate row
         curr_date = datetime.now().strftime('%m/%d/%Y')
         curr_time = datetime.now().strftime('%H:%M:%S')
-        row = [curr_date, curr_time, humidity]
+        row = [curr_date, curr_time, humidity, temperature]
 
         # Write row to sheet
         if not sheet.appendRow(row):
             sys.exit(1)
 
-        sleep(15)
+        sleep(POLLING_FREQUENCY)
