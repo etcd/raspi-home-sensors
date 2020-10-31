@@ -30,7 +30,7 @@ class SensorWrapper:
         except RuntimeError as e:
             logger.critical('Sensor failure: DHT sensor could not be polled')
             logger.critical(e)
-            return False
+            return (None, None)
 
         logger.info('Success')
         return (humidity, temperature)

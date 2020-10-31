@@ -3,10 +3,10 @@ import logging
 import sys
 from datetime import datetime
 from time import sleep
-
-from util import getMac, waitForSysClockSync
-from sheets import openSheet
+# local code
 from dht_sensor import connect as connectDHT
+from sheets import openSheet
+from util import getMac, waitForSysClockSync
 
 
 POLLING_FREQUENCY = 15
@@ -51,6 +51,12 @@ if __name__ == '__main__':
     while True:
         # Read from sensor
         humidity, temperature = dhtSensor.read()
+        if not humidity or not temperature:
+            # sleep(POLLING_FREQUENCY)
+            # continue
+            
+            # might as well restart entire sensor loop; more robust
+            sys.exit(1)
 
         # Generate row
         curr_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
