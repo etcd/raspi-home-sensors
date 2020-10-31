@@ -93,5 +93,5 @@ scp /path/on/local/computer/client_secret.json pi@192.168.LOCAL.IP:/home/pi/rasp
 # Dependencies from apt
 sudo apt-get install libgpiod2
 # Dependencies from pip3
-pip3 install gspread ntplib adafruit-circuitpython-dht
+pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
 ```
