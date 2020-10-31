@@ -53,9 +53,8 @@ if __name__ == '__main__':
         humidity, temperature = dhtSensor.read()
 
         # Generate row
-        curr_date = datetime.now().strftime('%m/%d/%Y')
-        curr_time = datetime.now().strftime('%H:%M:%S')
-        row = [curr_date, curr_time, getMac(), humidity, temperature, ]
+        curr_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        row = [curr_datetime, getMac(), humidity, temperature, ]
 
         # Write row to sheet
         if not sheet.appendRow(row):
