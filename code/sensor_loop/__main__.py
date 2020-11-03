@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 from time import sleep
 # local code
+from db import logDHT22, logFailure
 from dht_sensor import connect as connectDHT
 from sheets import openSheet
 from util import getMac, waitForSysClockSync
@@ -61,6 +62,9 @@ if __name__ == '__main__':
         # Generate row
         curr_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         row = [curr_datetime, getMac(), humidity, temperature, ]
+
+        # Log row to local DB
+        logDHT22(*row)
 
         # Write row to sheet
         if not sheet.appendRow(row):

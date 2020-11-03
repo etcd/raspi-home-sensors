@@ -18,7 +18,7 @@ class SheetWrapper:
             logger.critical(e)
             return False
 
-        logger.info('Success')
+        logger.debug('Success')
         return True
 
 def openSheet(url, worksheet, creds):
@@ -39,5 +39,5 @@ def openSheet(url, worksheet, creds):
         logger.critical(e)
         return False
 
-    logger.info('Success')
+    logger.debug('Success')
     return SheetWrapper(sheet)

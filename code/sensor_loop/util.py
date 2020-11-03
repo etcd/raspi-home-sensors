@@ -29,11 +29,11 @@ def waitForSysClockSync(timeout=30, threshold=15):
 
     currTime = ntpReq.tx_time
 
-    for i in range(timeout):
+    for _ in range(timeout):
         delta = abs(time() - currTime)
 
         if delta < threshold:
-            logger.info('Success')
+            logger.debug('Success')
             return True
         else:
             logger.info('.')

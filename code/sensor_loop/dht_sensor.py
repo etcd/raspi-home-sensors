@@ -32,7 +32,7 @@ class SensorWrapper:
             logger.critical(e)
             return (None, None)
 
-        logger.info('Success')
+        logger.debug('Success')
         return (humidity, temperature)
 
 def connect():    
@@ -47,5 +47,5 @@ def connect():
         logging.critical(e)
         return False
 
-    logging.info('Success')
+    logging.debug('Success')
     return SensorWrapper(dhtSensor)
