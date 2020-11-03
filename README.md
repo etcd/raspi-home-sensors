@@ -40,12 +40,14 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 3. Change the default password using `passwd` as leaving the default is a security risk.
 
-4. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
+4. Finally, if you're using the Lite version of Raspberry Pi OS, you may need to expand the filesystem and reboot:
 
     ```
     sudo raspi-config    # Select `Advanced Options` and then `Expand Filesystem`
     sudo reboot
     ```
+    
+    NOTE: I am unsure why I've needed to do this on some fresh installs and not others of the same Lite image on the same SD card to the same Pi. The command `df -h` tells you how much free space you have. If it doesn't say 100% used, then this is unnecessary.
 
 ## Install dependencies
 
