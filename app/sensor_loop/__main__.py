@@ -4,7 +4,6 @@ import sys
 from datetime import datetime, timezone
 from time import sleep
 # local code
-import db
 from dht_sensor import connect as connectDHT
 from sheets import openSheet
 from util import waitForSysClockSync
@@ -30,11 +29,7 @@ if __name__ == '__main__':
     # Read environment variables into variables
     secretPath = os.getenv('SECRET_PATH')
     sheetUrl = os.getenv('SHEET_URL')
-    localDbPath = os.getenv('LOCALDB_PATH')
     deviceName = os.getenv('DEVICE_NAME', '') # defaults to empty string
-
-    # Create local db
-    localdb = db.Database(localDbPath)
 
     # Wait for system clock to sync via NTP
     if not waitForSysClockSync():
@@ -64,9 +59,6 @@ if __name__ == '__main__':
         # Generate row
         curr_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
         row = [curr_datetime, deviceName, humidity, temperature, ]
-
-        # Log row to local DB
-        db.logDHT22(localdb, *row)
 
         # Write row to sheet
         if not sheet.appendRow(row):
