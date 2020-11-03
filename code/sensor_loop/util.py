@@ -4,7 +4,7 @@ import ntplib
 from socket import gaierror
 from time import sleep, time
 
-WAITING_PERIOD = 0.1 # seconds between checking for sync
+WAITING_PERIOD = 0.1 # seconds between consecutive checks of system clock for sync
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,7 @@ def getMac():
 def waitForSysClockSync(timeout=30, threshold=15):
     logger.info('Waiting for system clock to sync with NTP server')
 
+    # fetch time from NTP server
     ntpReq: ntplib.NTPStats # declare variable and its type without assignment
     try:
         ntpReq = ntplib.NTPClient().request('pool.ntp.org', version=3)
@@ -36,6 +37,7 @@ def waitForSysClockSync(timeout=30, threshold=15):
     # number of loops required to achieve `timeout` seconds
     loops = timeout/WAITING_PERIOD
     
+    # loop for checking whether system clock matches fetched time
     for _ in range(loops):
         delta = abs(time() - currTime)
 

@@ -10,7 +10,7 @@ from sheets import openSheet
 from util import getMac, waitForSysClockSync
 
 
-POLLING_FREQUENCY = 15
+POLLING_PERIOD = 15 # seconds between consecutive polls of sensors
 
 # Configure logger
 logging.basicConfig(
@@ -74,4 +74,4 @@ if __name__ == '__main__':
         if not sheet.appendRow(row):
             sys.exit(1)
 
-        sleep(POLLING_FREQUENCY)
+        sleep(POLLING_PERIOD)
