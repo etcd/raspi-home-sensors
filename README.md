@@ -12,7 +12,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 1. Write Raspberry Pi OS Lite to a microSD card.
 
-2. Navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to enable SSH upon boot up.
+2. Navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to start SSH upon every boot up.
 
 3. If your raspi supports wireless internet, you can tell it to automatically connect itself to a particular network by creating another file named `wpa_supplicant.conf` with the following contents:
 
