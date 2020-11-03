@@ -1,24 +1,32 @@
 import sqlite3
 
-# Connection
-# todo: get path via variable
-# connect to sqlite database; if file doesn't exist, this command creates it
-_conn = sqlite3.connect('sensors.db')
-_c = _conn.cursor()
+class Database:
+    # Initialize a connection given a sqlite DB file
+    def __init__(self, file):
+        # connect to sqlite database; if file doesn't exist, this command creates it
+        self.connection = sqlite3.connect(file)
+        self.cursor = self.connection.cursor()
 
-# Initialize DB with tables if they don't exist.
-_c.execute('CREATE TABLE IF NOT EXISTS DHT22 (time TIMESTAMP, device TEXT, humidity FLOAT, temperature FLOAT)')
-_conn.commit()
+        # Initialize DB with tables if they don't exist.
+        self.cursor.execute('CREATE TABLE IF NOT EXISTS DHT22 (time TIMESTAMP, device TEXT, humidity FLOAT, temperature FLOAT)')
+        self.connection.commit()
 
-## Queries
-def logDHT22(time, device, humidity, temperature):
-    _c.execute('INSERT INTO DHT22 VALUES (?,?,?,?)', (time, device, humidity, temperature))
-    _conn.commit()
+    def execute(self, *args):
+        return self.cursor.execute(*args)
+
+    def commit(self, *args):
+        return self.connection.commit(*args)
+
+# Queries
+
+def logDHT22(db, time, device, humidity, temperature):
+    db.execute('INSERT INTO DHT22 VALUES (?,?,?,?)', (time, device, humidity, temperature))
+    db.commit()
     return True
 
-def logFailure(time, device, cause):
-    _c.execute('INSERT INTO failures VALUES (?,?,?)', (time, device, cause))
-    _conn.commit()
+def logFailure(db, time, device, cause):
+    db.execute('INSERT INTO failures VALUES (?,?,?)', (time, device, cause))
+    db.commit()
     return True
 
 

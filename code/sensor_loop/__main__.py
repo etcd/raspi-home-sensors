@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 from time import sleep
 # local code
-from db import logDHT22, logFailure
+import db
 from dht_sensor import connect as connectDHT
 from sheets import openSheet
 from util import getMac, waitForSysClockSync
@@ -32,7 +32,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('secret', help='Absolute file path to secret used to authenticate as service account with Google Sheets.')
     parser.add_argument('sheetUrl', help='URL to Google Sheet used for storing data.')
+    parser.add_argument('localdb', help='Absolute file path to local sqlite database.')
     args = parser.parse_args()
+
+    # Create local db
+    localdb = db.Database(args.localdb)
 
     # Wait for system clock to sync via NTP
     if not waitForSysClockSync():
@@ -64,7 +68,7 @@ if __name__ == '__main__':
         row = [curr_datetime, getMac(), humidity, temperature, ]
 
         # Log row to local DB
-        logDHT22(*row)
+        db.logDHT22(localdb, *row)
 
         # Write row to sheet
         if not sheet.appendRow(row):

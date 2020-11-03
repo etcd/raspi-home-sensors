@@ -19,6 +19,8 @@ META_LOG="${CODE_PATH}/meta_loop.log"
 SENSOR_LOG="${CODE_PATH}/sensor_loop.log"
 # Path to Google client secret
 SECRET_PATH="${CODE_PATH}/client_secret.json"
+# Path to local sqlite database
+SECRET_PATH="${CODE_PATH}/sensors.db"
 
 # Counter for number of times until loop has run
 counter=0
