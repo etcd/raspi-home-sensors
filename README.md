@@ -58,7 +58,9 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
     ```
     # docker dependencies
     sudo apt-get install apt-transport-https ca-certificates software-properties-common
+    ```
     
+    ```
     # docker
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
