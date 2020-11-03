@@ -28,7 +28,7 @@ The instructions below document how to perform headless setup and management wit
     }
     ```
 
-  You can now insert the microSD card into the Raspberry Pi.
+    You can now insert the microSD card into the Raspberry Pi.
 
 ## First boot
 
