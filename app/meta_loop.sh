@@ -11,6 +11,9 @@
 # URL of Google Sheet
 SHEET_URL='https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
 
+# Name of this device
+DEVICE_NAME='pi1'
+
 # Path where this script is located
 CODE_PATH=`dirname "$0"`
 # Path to log file for meta loop (this script)
@@ -30,7 +33,7 @@ echo "------------------------------------------------------------" >>$META_LOG
 echo "                    $(date +'%Y-%m-%d %H:%M:%S')            " >>$META_LOG
 echo "                    Starting meta loop                      " >>$META_LOG
 echo "------------------------------------------------------------" >>$META_LOG
-until su pi -c "python3 ${CODE_PATH}/sensor_loop ${SECRET_PATH} ${SHEET_URL} ${LOCALDB_PATH}" >>$SENSOR_LOG 2>>$META_LOG
+until su pi -c "python3 ${CODE_PATH}/sensor_loop ${SECRET_PATH} ${SHEET_URL} ${LOCALDB_PATH} ${DEVICE_NAME}" >>$SENSOR_LOG 2>>$META_LOG
 do
     echo "------------------------------------------------------------" >>$META_LOG
     echo "                    $(date +'%Y-%m-%d %H:%M:%S')            " >>$META_LOG

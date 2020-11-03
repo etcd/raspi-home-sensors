@@ -7,7 +7,7 @@ from time import sleep
 import db
 from dht_sensor import connect as connectDHT
 from sheets import openSheet
-from util import getMac, waitForSysClockSync
+from util import waitForSysClockSync
 
 
 POLLING_PERIOD = 15 # seconds between consecutive polls of sensors
@@ -33,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('secret', help='Absolute file path to secret used to authenticate as service account with Google Sheets.')
     parser.add_argument('sheetUrl', help='URL to Google Sheet used for storing data.')
     parser.add_argument('localdb', help='Absolute file path to local sqlite database.')
+    parser.add_argument('deviceName', help='Name of this device.')
     args = parser.parse_args()
 
     # Create local db
@@ -65,7 +66,7 @@ if __name__ == '__main__':
 
         # Generate row
         curr_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
-        row = [curr_datetime, getMac(), humidity, temperature, ]
+        row = [curr_datetime, args.deviceName, humidity, temperature, ]
 
         # Log row to local DB
         db.logDHT22(localdb, *row)
