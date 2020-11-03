@@ -1,7 +1,7 @@
 import argparse
 import logging
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from time import sleep
 # local code
 import db
@@ -64,7 +64,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         # Generate row
-        curr_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        curr_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
         row = [curr_datetime, getMac(), humidity, temperature, ]
 
         # Log row to local DB
