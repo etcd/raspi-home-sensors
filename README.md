@@ -23,8 +23,8 @@ update_config=1
 
 network={
 scan_ssid=1
-ssid="your_wifi_ssid"
-psk="your_wifi_password"
+ssid="yOuR_WiFi_sSiD"
+psk="yOuR_WiFi_pAsSwOrD"
 }
 ```
 
