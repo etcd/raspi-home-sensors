@@ -43,7 +43,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 4. Finally, if you're using the Lite version of Raspberry Pi OS, you may need to expand the filesystem and reboot:
 
     ```
-    sudo raspi-config    # Select `Advanced Options` and then `Expand Filesystem`
+    sudo raspi-config       # Select `Advanced Options` and then `Expand Filesystem`
     sudo reboot
     ```
     
@@ -54,14 +54,14 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 1. Ensure the Pi is up to date (this can take a while, even with Raspberry Pi OS Lite):
 
     ``` 
-    sudo apt-get update && sudo apt-get upgrade
+    sudo apt update && sudo apt-get upgrade
     ```
 
 2. Install Docker:
 
     ```
     # docker dependencies
-    sudo apt-get install apt-transport-https ca-certificates software-properties-common
+    sudo apt install apt-transport-https ca-certificates software-properties-common
     ```
     
     ```
@@ -72,7 +72,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 3. Install all other dependencies:
     ```
-    sudo apt-get install libgpiod2
+    sudo apt install libgpiod2
     pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
     ```
 
@@ -81,6 +81,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 1. Clone this repository to the raspi:
 
     ```
+    sudo apt install git        # since Lite doesn't come with git
     git clone https://github.com/etcd/raspi-home-sensors.git
     ```
 
