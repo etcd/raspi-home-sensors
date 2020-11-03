@@ -1,10 +1,12 @@
 # raspi-home-sensors
 
-This repository contains code that enables any Raspberry Pi to regularly poll a DHT22 sensor for humidity and temperature and log the data to a Google Sheet. The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (for example, whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained). The instructions also describe how to set up wireless connectivity on supported Raspberry Pis, so only one physical connection for power is necessary, enabling high portability for this project. 
+This repository contains code that enables a Raspberry Pi to regularly poll a DHT22 sensor for humidity and temperature and log the data to a database.
+
+The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (e.g., whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
 
 # Setup Raspberry Pi
 
-I've found that the most convenient way of using a raspi is through headless setup and operation. The instructions below document how to perform this headless setup with Raspberry Pi OS (formerly Raspbian).
+The instructions below document how to perform headless setup and management with Raspberry Pi OS (formerly Raspbian).
 
 ## Install Raspberry Pi OS
 
@@ -30,7 +32,7 @@ The microSD can now be inserted into the raspi.
 
 ## SSH in
 
-Once the raspi is plugged in and it boots up, it should automatically be possible to SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
+Once the raspi is plugged in and it boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
 
 The IP of the raspi can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
 
@@ -60,6 +62,14 @@ Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable 
 ## Install dependencies
 
 ```
+# Ensure system is up to date
+sudo apt-get update && sudo apt-get upgrade
+
+# Install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+
 # Dependencies from apt
 sudo apt-get install libgpiod2
 # Dependencies from pip3
