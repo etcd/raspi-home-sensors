@@ -70,31 +70,26 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
     sudo sh get-docker.sh
     ```
 
-3. Install all other dependencies:
-    ```
-    sudo apt install libgpiod2
-    pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
-    ```
+# Set up and run app
 
-## Add scripts
-
-1. Clone this repository to the raspi:
+1. Clone this repository to the Pi:
 
     ```
     sudo apt install git    # since Lite doesn't come with git
     git clone https://github.com/etcd/raspi-home-sensors.git
     ```
 
-2. Configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
+2. Add configuration variables by creating a file named `.env` with the following contents:
 
     ```
-    /home/pi/raspi-home-sensors/code/meta_loop.sh &
+    SECRET_PATH='/opt/app/client_secret.json'
+    SHEET_URL='https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
+    DEVICE_NAME='descriptive_name_of_this_device'
     ```
 
-3. The `meta_loop.sh` file (inside `code`) also needs to be made executable once cloned onto the raspi:
+3. Build and run the app:
 
     ```
-    chmod +x meta_loop.sh
+    sudo docker build --tag raspi-home-sensors ./raspi-home-sensors/
+    sudo docker run --env-file /path/to/created/.env raspi-home-sensors
     ```
-
-4. Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable named `SHEET_URL`.
