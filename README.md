@@ -4,17 +4,17 @@ This repository contains code that enables a Raspberry Pi to regularly poll a DH
 
 The code is lightweight and highly resilient against many types of failure. The code has multiple levels of failsafe and will restart operation automatically when it encounters errors (e.g., whether internet connectivity goes out for 1 second or 1 year, the code will resume data transfer the moment internet connectivity is regained).
 
-# Setup Raspberry Pi
+# Set up Raspberry Pi
 
 The instructions below document how to perform headless setup and management with Raspberry Pi OS (formerly Raspbian).
 
 ## Install Raspberry Pi OS
 
-First, write Raspberry Pi OS to a microSD card (I used Balena Etcher).
+1. Write Raspberry Pi OS Lite to a microSD card. I used Balena Etcher.
 
-Then, navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to enable SSH upon boot up.
+2. Navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to enable SSH upon boot up.
 
-Next, if your raspi supports wireless internet, you can tell it to automatically connect itself to a particular network by creating another file named `wpa_supplicant.conf` with the following contents:
+3. If your raspi supports wireless internet, you can tell it to automatically connect itself to a particular network by creating another file named `wpa_supplicant.conf` with the following contents:
 
 ```
 country=US
@@ -28,13 +28,22 @@ psk="yOuR_WiFi_pAsSwOrD"
 }
 ```
 
-The microSD can now be inserted into the raspi.
+You can now insert the microSD card into the Raspberry Pi.
 
-## SSH in
+## First boot
 
-Once the raspi is plugged in and it boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
+1. Plug in the Raspberry Pi. Once it boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
 
-The IP of the raspi can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
+2. You can determine your Raspberry Pi's IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
+
+3. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
+
+```
+sudo raspi-config
+# Select Advanced Options
+# Select Expand Filesystem
+sudo reboot
+```
 
 ## Install dependencies
 
