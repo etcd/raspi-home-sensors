@@ -1,4 +1,3 @@
 gspread
 ntplib
 adafruit-circuitpython-dht
-netifaces
