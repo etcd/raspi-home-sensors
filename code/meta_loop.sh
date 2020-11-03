@@ -20,7 +20,7 @@ SENSOR_LOG="${CODE_PATH}/sensor_loop.log"
 # Path to Google client secret
 SECRET_PATH="${CODE_PATH}/client_secret.json"
 # Path to local sqlite database
-SECRET_PATH="${CODE_PATH}/sensors.db"
+LOCALDB_PATH="${CODE_PATH}/sensors.db"
 
 # Counter for number of times until loop has run
 counter=0
@@ -30,7 +30,7 @@ echo "------------------------------------------------------------" >>$META_LOG
 echo "                    $(date +'%Y-%m-%d %H:%M:%S')            " >>$META_LOG
 echo "                    Starting meta loop                      " >>$META_LOG
 echo "------------------------------------------------------------" >>$META_LOG
-until su pi -c "python3 ${CODE_PATH}/sensor_loop ${SECRET_PATH} ${SHEET_URL}" >>$SENSOR_LOG 2>>$META_LOG
+until su pi -c "python3 ${CODE_PATH}/sensor_loop ${SECRET_PATH} ${SHEET_URL} ${LOCALDB_PATH}" >>$SENSOR_LOG 2>>$META_LOG
 do
     echo "------------------------------------------------------------" >>$META_LOG
     echo "                    $(date +'%Y-%m-%d %H:%M:%S')            " >>$META_LOG
