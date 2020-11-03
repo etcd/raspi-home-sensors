@@ -1,5 +1,5 @@
-import argparse
 import logging
+import os
 import sys
 from datetime import datetime, timezone
 from time import sleep
@@ -8,7 +8,6 @@ import db
 from dht_sensor import connect as connectDHT
 from sheets import openSheet
 from util import waitForSysClockSync
-
 
 POLLING_PERIOD = 15 # seconds between consecutive polls of sensors
 
@@ -28,16 +27,14 @@ if __name__ == '__main__':
     logger.info('                       Starting script                       ')
     logger.info('-------------------------------------------------------------')
 
-    # Parse arguments passed into script
-    parser = argparse.ArgumentParser()
-    parser.add_argument('secret', help='Absolute file path to secret used to authenticate as service account with Google Sheets.')
-    parser.add_argument('sheetUrl', help='URL to Google Sheet used for storing data.')
-    parser.add_argument('localdb', help='Absolute file path to local sqlite database.')
-    parser.add_argument('deviceName', help='Name of this device.')
-    args = parser.parse_args()
+    # Read environment variables into variables
+    secretPath = os.getenv('SECRET_PATH')
+    sheetUrl = os.getenv('SHEET_URL')
+    localDbPath = os.getenv('LOCALDB_PATH')
+    deviceName = os.getenv('DEVICE_NAME', '') # defaults to empty string
 
     # Create local db
-    localdb = db.Database(args.localdb)
+    localdb = db.Database(localDbPath)
 
     # Wait for system clock to sync via NTP
     if not waitForSysClockSync():
@@ -49,7 +46,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Open sheet
-    sheet = openSheet(args.sheetUrl, 'DHT22', args.secret)
+    sheet = openSheet(sheetUrl, 'DHT22', secretPath)
     if not sheet:
         sys.exit(1)
 
@@ -66,7 +63,7 @@ if __name__ == '__main__':
 
         # Generate row
         curr_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
-        row = [curr_datetime, args.deviceName, humidity, temperature, ]
+        row = [curr_datetime, deviceName, humidity, temperature, ]
 
         # Log row to local DB
         db.logDHT22(localdb, *row)
