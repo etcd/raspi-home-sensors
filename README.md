@@ -36,6 +36,23 @@ Once the raspi is plugged in and it boots up, you can SSH into it using the comm
 
 The IP of the raspi can be determined by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
 
+## Install dependencies
+
+```
+# Ensure system is up to date
+sudo apt-get update && sudo apt-get upgrade
+
+# Install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+
+# Dependencies from apt
+sudo apt-get install libgpiod2
+# Dependencies from pip3
+pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
+```
+
 ## Add scripts
 
 Next, clone this repository to the raspi:
@@ -58,20 +75,3 @@ chmod +x meta_loop.sh
 ```
 
 Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable named `SHEET_URL`.
-
-## Install dependencies
-
-```
-# Ensure system is up to date
-sudo apt-get update && sudo apt-get upgrade
-
-# Install docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-
-
-# Dependencies from apt
-sudo apt-get install libgpiod2
-# Dependencies from pip3
-pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
-```
