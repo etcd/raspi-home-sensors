@@ -8,6 +8,8 @@ COPY ./app/sensor_loop/requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./app/ .
+ENV SECRET_PATH='/opt/app/appdata/client_secret.json'
 ENV SHEET_URL='https://docs.google.com/spreadsheets/d/1WF35JEkQr129Cluj2MAp6fM3QjogUusoJytuiqaXZZs'
-CMD ls
-CMD python sensor_loop 
+ENV LOCALDB_PATH='/opt/app/appdata/sensors.db'
+ENV DEVICE_NAME='testdevice'
+CMD python sensor_loop ${SECRET_PATH} ${SHEET_URL} ${LOCALDB_PATH} ${DEVICE_NAME}

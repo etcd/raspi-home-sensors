@@ -1,5 +1,6 @@
 import logging
 import ntplib
+from math import ceil
 from socket import gaierror
 from time import sleep, time
 
@@ -24,7 +25,7 @@ def waitForSysClockSync(timeout=30, threshold=15):
     currTime = ntpReq.tx_time
 
     # number of loops required to achieve `timeout` seconds
-    loops = timeout/WAITING_PERIOD
+    loops = ceil(timeout/WAITING_PERIOD)
     
     # loop for checking whether system clock matches fetched time
     for _ in range(loops):
