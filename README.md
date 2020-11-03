@@ -12,7 +12,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 1. Write Raspberry Pi OS Lite to a microSD card.
 
-2. Navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to start SSH upon every boot up.
+2. Navigate to the root of this card and create an empty file named `ssh`. This tells the Pi to start its SSH server upon every boot up.
 
 3. If your raspi supports wireless internet, you can tell it to automatically connect itself to a particular network by creating another file named `wpa_supplicant.conf` with the following contents:
 
@@ -32,22 +32,26 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 ## First boot
 
-1. Connect the Raspberry Pi to power.
+1. Connect the Raspberry Pi to power to turn it on.
 
-2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`; the default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd` as leaving the default is a security risk.
+2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` with the default password `raspberry`.
 
-    You can determine the IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended if want to assign a static IP to this device.
+    NOTE: on Raspberry Pi OS Lite only, I've run into the issue where I cannot to SSH in upon first boot. Booting it a second time (I wait about a minute so that the first boot fully completes) fixes this problem.
 
-4. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
+3. Change the default password using `passwd` as leaving the default is a security risk.
+
+4. Finally, if you're using the Lite version of Raspberry Pi OS, you may need to expand the filesystem and reboot:
 
     ```
     sudo raspi-config    # Select `Advanced Options` and then `Expand Filesystem`
     sudo reboot
     ```
+    
+    NOTE: I am unsure why I've needed to do this on some fresh installs and not others of the same Lite image on the same SD card to the same Pi. The command `df -h` tells you how much free space you have. If it doesn't say 100% used, then this is unnecessary.
 
 ## Install dependencies
 
-1. Ensure the Pi is up to date:
+1. Ensure the Pi is up to date (this can take a while, even with Raspberry Pi OS Lite):
 
     ``` 
     sudo apt-get update && sudo apt-get upgrade
@@ -56,6 +60,12 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 2. Install Docker:
 
     ```
+    # docker dependencies
+    sudo apt-get install apt-transport-https ca-certificates software-properties-common
+    ```
+    
+    ```
+    # docker
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     ```
