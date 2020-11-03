@@ -62,9 +62,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 3. Install all other dependencies:
     ```
-    # Dependencies from apt
     sudo apt-get install libgpiod2
-    # Dependencies from pip3
     pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
     ```
 
