@@ -32,18 +32,18 @@ The instructions below document how to perform headless setup and management wit
 
 ## First boot
 
-1. Plug in the Raspberry Pi. Once it boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` (if not, you may be running into local network restrictions that need to be lifted). The default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd`, as leaving the default is a security risk.
+1. Insert the microSD card into the Raspberry Pi and connect the Raspberry Pi to power.
 
-2. You can determine your Raspberry Pi's IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
+2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`; the default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd` as leaving the default is a security risk.
 
-3. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
+    You can determine your Raspberry Pi's IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
 
-```
-sudo raspi-config
-# Select Advanced Options
-# Select Expand Filesystem
-sudo reboot
-```
+4. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
+
+    ```
+    sudo raspi-config    # Select `Advanced Options` and then `Expand Filesystem`
+    sudo reboot
+    ```
 
 ## Install dependencies
 
