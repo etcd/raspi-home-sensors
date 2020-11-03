@@ -4,8 +4,9 @@ import ntplib
 from socket import gaierror
 from time import sleep, time
 
-logger = logging.getLogger(__name__)
+WAITING_PERIOD = 0.1 # seconds between checking for sync
 
+logger = logging.getLogger(__name__)
 
 def getMac():
     # this function gets the mac address of the current device's default internet gateway
@@ -17,8 +18,12 @@ def getMac():
 
     return mac
 
+# wait for system clock to sync with fetched time from NTP server
+# timeout - seconds to check for before returning False
+# threshold - maximum allowable difference (in seconds) between retrieved time vs system time
 def waitForSysClockSync(timeout=30, threshold=15):
     logger.info('Waiting for system clock to sync with NTP server')
+
     ntpReq: ntplib.NTPStats # declare variable and its type without assignment
     try:
         ntpReq = ntplib.NTPClient().request('pool.ntp.org', version=3)
@@ -26,10 +31,12 @@ def waitForSysClockSync(timeout=30, threshold=15):
         logger.critical('Could not connect to NTP server')
         logger.critical(e)
         return False
-
     currTime = ntpReq.tx_time
 
-    for _ in range(timeout):
+    # number of loops required to achieve `timeout` seconds
+    loops = timeout/WAITING_PERIOD
+    
+    for _ in range(loops):
         delta = abs(time() - currTime)
 
         if delta < threshold:
@@ -38,8 +45,7 @@ def waitForSysClockSync(timeout=30, threshold=15):
         else:
             logger.info('.')
 
-        sleep(1)
+        sleep(WAITING_PERIOD)
 
     logger.critical('System clock failed to sync with NTP server within timeout (%s seconds)', timeout)
     return False
-    
