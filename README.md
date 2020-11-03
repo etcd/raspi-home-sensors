@@ -32,11 +32,13 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 ## First boot
 
-1. Connect the Raspberry Pi to power.
+1. Connect the Raspberry Pi to power to turn it on.
 
-2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`; the default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd` as leaving the default is a security risk.
+2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi` with the default password `raspberry`.
 
-    You can determine the IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended if want to assign a static IP to this device.
+    NOTE: on Raspberry Pi OS Lite only, I've run into the issue where I cannot to SSH in upon first boot. Booting it a second time (I wait about a minute so that the first boot fully completes) fixes this problem.
+
+3. Change the default password using `passwd` as leaving the default is a security risk.
 
 4. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
 
