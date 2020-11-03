@@ -16,19 +16,19 @@ The instructions below document how to perform headless setup and management wit
 
 3. If your raspi supports wireless internet, you can tell it to automatically connect itself to a particular network by creating another file named `wpa_supplicant.conf` with the following contents:
 
-```
-country=US
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
+    ```
+    country=US
+    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+    update_config=1
 
-network={
-scan_ssid=1
-ssid="yOuR_WiFi_sSiD"
-psk="yOuR_WiFi_pAsSwOrD"
-}
-```
+    network={
+    scan_ssid=1
+    ssid="yOuR_WiFi_sSiD"
+    psk="yOuR_WiFi_pAsSwOrD"
+    }
+    ```
 
-You can now insert the microSD card into the Raspberry Pi.
+  You can now insert the microSD card into the Raspberry Pi.
 
 ## First boot
 
