@@ -28,15 +28,15 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
     }
     ```
 
-    You can now insert the microSD card into the Raspberry Pi.
+4. Insert the microSD card into the Raspberry Pi.
 
 ## First boot
 
-1. Insert the microSD card into the Raspberry Pi and connect the Raspberry Pi to power.
+1. Connect the Raspberry Pi to power.
 
 2. Once the Pi boots up, you can SSH into it using the command `ssh <192.168.LOCAL.IP> -l pi`; the default password for Raspberry Pi OS is `raspberry`. You should change the default password using `passwd` as leaving the default is a security risk.
 
-    You can determine your Raspberry Pi's IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended, since there's a good chance you'll also want to assign a static IP to this device.
+    You can determine the IP by looking for the device named `raspberrypi` on your local network. You can use a network scanner or log into your router to list your devices. Logging into your router is recommended if want to assign a static IP to this device.
 
 4. Finally, if you're using the Lite version of Raspberry Pi OS, you will need to expand the filesystem and reboot:
 
@@ -47,40 +47,45 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 ## Install dependencies
 
-```
-# Ensure system is up to date
-sudo apt-get update && sudo apt-get upgrade
+1. Ensure the Pi is up to date:
 
-# Install docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+    ``` 
+    sudo apt-get update && sudo apt-get upgrade
+    ```
 
+2. Install Docker:
 
-# Dependencies from apt
-sudo apt-get install libgpiod2
-# Dependencies from pip3
-pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
-```
+    ```
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    ```
+
+3. Install all other dependencies:
+    ```
+    # Dependencies from apt
+    sudo apt-get install libgpiod2
+    # Dependencies from pip3
+    pip3 install gspread ntplib adafruit-circuitpython-dht netifaces
+    ```
 
 ## Add scripts
 
-Next, clone this repository to the raspi:
+1. Clone this repository to the raspi:
 
-```
-# clone to /home/pi
-git clone https://github.com/etcd/raspi-home-sensors.git
-```
+    ```
+    git clone https://github.com/etcd/raspi-home-sensors.git
+    ```
 
-Then, configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
+2. Configure the code to run every time the raspi boots by editing `/etc/rc.local` with root permissions. Add the following line before `exit 0`:
 
-```
-/home/pi/raspi-home-sensors/code/meta_loop.sh &
-```
+    ```
+    /home/pi/raspi-home-sensors/code/meta_loop.sh &
+    ```
 
-The `meta_loop.sh` file (inside `code`) also needs to be made executable once cloned onto the raspi:
+3. The `meta_loop.sh` file (inside `code`) also needs to be made executable once cloned onto the raspi:
 
-```
-chmod +x meta_loop.sh
-```
+    ```
+    chmod +x meta_loop.sh
+    ```
 
-Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable named `SHEET_URL`.
+4. Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable named `SHEET_URL`.
