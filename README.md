@@ -6,11 +6,11 @@ The code is lightweight and highly resilient against many types of failure. The 
 
 # Set up Raspberry Pi
 
-The instructions below document how to perform headless setup and management with Raspberry Pi OS (formerly Raspbian).
+The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 ## Install Raspberry Pi OS
 
-1. Write Raspberry Pi OS Lite to a microSD card. I used Balena Etcher.
+1. Write Raspberry Pi OS Lite to a microSD card.
 
 2. Navigate to the root of this card and create an empty file named `ssh`. This tells Raspberry Pi OS to enable SSH upon boot up.
 
