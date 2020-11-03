@@ -47,7 +47,7 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 
 ## Install dependencies
 
-1. Ensure the Pi is up to date:
+1. Ensure the Pi is up to date (this can take a while, even with Raspberry Pi OS Lite):
 
     ``` 
     sudo apt-get update && sudo apt-get upgrade
@@ -56,6 +56,10 @@ The instructions below document how to headlessly set up and run a Raspberry Pi.
 2. Install Docker:
 
     ```
+    # docker dependencies
+    sudo apt-get install apt-transport-https ca-certificates software-properties-common
+    
+    # docker
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     ```
