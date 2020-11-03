@@ -71,7 +71,7 @@ Then, configure the code to run every time the raspi boots by editing `/etc/rc.l
 /home/pi/raspi-home-sensors/code/meta_loop.sh &
 ```
 
-The `meta_loop.sh` file also needs to be made executable once moved onto the raspi:
+The `meta_loop.sh` file (inside `code`) also needs to be made executable once cloned onto the raspi:
 
 ```
 chmod +x meta_loop.sh
@@ -81,7 +81,7 @@ Finally, copy the URL of the Google Sheet into `meta_loop.sh` into the variable 
 
 ## Add service worker credentials
 
-Copy the json file containing the service worker credentials to the raspi and name it `client_secret.json`:
+Copy the json file containing the service worker credentials to the raspi and name it `client_secret.json`. If this file is on your local computer, you can use SCP to copy it to the raspi:
 
 ```
 scp /path/on/local/computer/client_secret.json pi@192.168.LOCAL.IP:/home/pi/raspi-home-sensors/code/client_secret.json
